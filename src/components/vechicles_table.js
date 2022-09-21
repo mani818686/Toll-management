@@ -42,6 +42,7 @@ function VehicleTable() {
     let tollData, vehicleData
     if (!showTolls) {
       vehicleData = JSON.parse(localStorage.getItem('Vehicles'))
+      if(vehicleData){
       let filteredData = vehicleData.filter(
         (res) =>
           res.VehicleNumber.search(search.trim()) !== -1 &&
@@ -51,13 +52,16 @@ function VehicleTable() {
       setVehicleEntries(filteredData || [])
       tollData = JSON.parse(localStorage.Tolls)
       setEntries(tollData || [])
+      }
     } else {
       tollData = JSON.parse(localStorage.Tolls)
       console.log(tollData)
+      if(tollData){
       let filteredData = tollData.filter(
         (res) => res.tollName.search(search.trim()) !== -1,
       )
       setEntries(filteredData || [])
+      }
     }
     // console.log(tollData, vehicleData)
   }, [search, showTolls, filter])
@@ -89,7 +93,7 @@ function VehicleTable() {
               type="text"
               value={search}
               style={{ width: '200px', borderRadius: '8px',padding:"5px" }}
-              placeholder={!showModal?"search vehicle":"search Toll Name"}
+              placeholder={!showTolls?"search vehicle":"search Toll Name"}
               onChange={handleSearch}>
             </input>
           </div>
