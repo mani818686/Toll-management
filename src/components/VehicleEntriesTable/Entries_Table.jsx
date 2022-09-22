@@ -3,7 +3,7 @@ import React from 'react'
 function Entries_Table({ Entries }) {
   console.log(Entries)
   if(Entries.length==0)
-    return <h2>Vehicles Not Found</h2>
+    return <h3 sx={{width:"300px"}}>Vehicles Not Found</h3>
   return (
     <>
       <table style={{ width: '100%' }}>

@@ -1,8 +1,8 @@
 import React from 'react'
 
 function TollEntries({ Entries }) {
-    if(Entries.length==0)
-    return <h2>Toll Not Found</h2>
+  if (Entries.length == 0)
+    return <h2 sx={{ width: '350px' }}>Toll Not Found</h2>
   return (
     <>
       <table style={{ width: '100%' }}>
