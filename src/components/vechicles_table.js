@@ -5,8 +5,7 @@ import TollEntryModal from './TollEntryModal/TollEntryModal'
 import TollEntries from './TollEntryTable.js/table_entries'
 
 import filterLogo from '../Icons/filterlogo.png'
-import tick  from '../Icons/tick.png'
-
+import tick from '../Icons/tick.png'
 
 function VehicleTable() {
   const [showModal, setShowModal] = useState(false)
@@ -42,25 +41,25 @@ function VehicleTable() {
     let tollData, vehicleData
     if (!showTolls) {
       vehicleData = JSON.parse(localStorage.getItem('Vehicles'))
-      if(vehicleData){
-      let filteredData = vehicleData.filter(
-        (res) =>
-          res.VehicleNumber.search(search.trim()) !== -1 &&
-          res.tollName.search(filter.trim()) !== -1,
-      )
-      console.log(filteredData)
-      setVehicleEntries(filteredData || [])
-      tollData = JSON.parse(localStorage.Tolls)
-      setEntries(tollData || [])
+      if (vehicleData) {
+        let filteredData = vehicleData.filter(
+          (res) =>
+            res.VehicleNumber.search(search.trim()) !== -1 &&
+            res.tollName.search(filter.trim()) !== -1,
+        )
+        console.log(filteredData)
+        setVehicleEntries(filteredData || [])
+        tollData = JSON.parse(localStorage.Tolls)
+        setEntries(tollData || [])
       }
     } else {
-      tollData = JSON.parse(localStorage.Tolls)
+      tollData = JSON.parse(localStorage.getItem('Tolls'))
       console.log(tollData)
-      if(tollData){
-      let filteredData = tollData.filter(
-        (res) => res.tollName.search(search.trim()) !== -1,
-      )
-      setEntries(filteredData || [])
+      if (tollData) {
+        let filteredData = tollData.filter(
+          (res) => res.tollName.search(search.trim()) !== -1,
+        )
+        setEntries(filteredData || [])
       }
     }
     // console.log(tollData, vehicleData)
@@ -70,17 +69,29 @@ function VehicleTable() {
     <>
       <div id="features">
         <div className="row">
-          <h4 className="col-3 head">{!showTolls?"Toll entries/Vehicle entries":"Tollgate List"}</h4>
+          <h4 className="col-3 head">
+            {!showTolls ? 'Toll entries/Vehicle entries' : 'Tollgate List'}
+          </h4>
           <div className="icon col-1">
             {!showTolls && (
               <div class="dropdown">
-                <button style={{backgroundColor:"white"}}><img src={filterLogo} width="20px" ></img></button>
+                <button style={{ backgroundColor: 'white' }}>
+                  <img src={filterLogo} width="20px"></img>
+                </button>
                 <div class="dropdown-content">
-                  <p onClick={() => handleFilter('')}>All {filter===''?<img className='tick' src={tick}></img>:''}</p>
+                  <p onClick={() => handleFilter('')}>
+                    All{' '}
+                    {filter === '' ? (
+                      <img className="tick" src={tick}></img>
+                    ) : (
+                      ''
+                    )}
+                  </p>
                   {Entries.map((e) => {
                     return (
                       <p onClick={() => handleFilter(e.tollName)}>
-                        {e.tollName} {filter===e.tollName ?<img src={tick}></img>:''}
+                        {e.tollName}{' '}
+                        {filter === e.tollName ? <img src={tick}></img> : ''}
                       </p>
                     )
                   })}
@@ -92,10 +103,10 @@ function VehicleTable() {
             <input
               type="text"
               value={search}
-              style={{ width: '200px', borderRadius: '8px',padding:"5px" }}
-              placeholder={!showTolls?"search vehicle":"search Toll Name"}
-              onChange={handleSearch}>
-            </input>
+              style={{ width: '200px', borderRadius: '8px', padding: '5px' }}
+              placeholder={!showTolls ? 'search vehicle' : 'search Toll Name'}
+              onChange={handleSearch}
+            ></input>
           </div>
           <div className="buttons">
             <button type="button" onClick={() => handleShowVehicleEntry(true)}>
